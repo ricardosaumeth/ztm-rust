@@ -1,3 +1,5 @@
+use chrono::prelude::*;
+
 // Topic: External crates
 //
 // Requirements:
@@ -8,5 +10,7 @@
 // * (OPTIONAL) Read the documentation section `Formatting and Parsing`
 //   for examples on how to create custom time formats
 
-fn main() {}
-
+fn main() {
+  let utc: DateTime<Utc> = Utc::now();
+  println!("{:?}", utc.format("%Y-%m-%d %H:%M:%S").to_string())
+}
