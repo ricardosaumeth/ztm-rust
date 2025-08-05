@@ -29,5 +29,53 @@
 // * A vector is the easiest way to store the bills at stage 1, but a
 //   hashmap will be easier to work with at stages 2 and 3.
 
-fn main() {}
+use std::io;
 
+enum MainMenu {
+  AddBill,
+  ViewBill,
+}
+
+impl MainMenu {
+  fn from_str(input: &str) -> Option<MainMenu> {
+    match input {
+      "1" => Some(Self::AddBill),
+      "2" => Some(Self::ViewBill), 
+      _ => None 
+    }
+  }
+
+  fn show() {
+    println!("");
+    println!(" == Bill manager ==");
+    println!("1. Add Bill");
+    println!("2. View Bill");
+    println!("");
+    println!("Enter selection: ");
+  }
+}
+
+fn get_input() -> Option<String> {
+  let mut buffer = String::new();
+  while io::stdin().read_line(&mut buffer).is_err() {
+    println!("Please enter your data again");
+  }
+  let input = buffer.trim().to_owned();
+  if &input == "" {
+    None
+  } else {
+    Some(input)
+  }
+}
+
+fn main() {
+  loop {
+    MainMenu::show();
+    let input = get_input().expect("no data entered");
+    match MainMenu::from_str(input.as_str()) {
+        Some(MainMenu::AddBill) => (),
+        Some(MainMenu::ViewBill) => (),
+        None => return
+    }
+  }
+}
