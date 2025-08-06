@@ -29,8 +29,7 @@
 // * A vector is the easiest way to store the bills at stage 1, but a
 //   hashmap will be easier to work with at stages 2 and 3.
 
-use std::collections::HashMap;
-use std::io;
+use std::{collections::HashMap, io};
 
 #[derive(Debug, Clone)]
 pub struct Bill {
@@ -53,12 +52,12 @@ impl Bills {
     self.inner.insert(bill.name.to_string(), bill);
   }
 
-  fn get_all(&self) -> Vec<&Bill> {
-    self.inner.values().collect()
-  }
-
   fn remove(&mut self, name: &str) -> bool {
     self.inner.remove(name).is_some()
+  }
+
+  fn get_all(&self) -> Vec<&Bill> {
+    self.inner.values().collect()
   }
 }
 
@@ -80,11 +79,10 @@ mod menu {
     println!("Bill added")
   }
 
-  pub fn remove_bill(bills: &mut Bills) {
-    for bill in bills.get_all() {
-      println!("{:?}", bill);
-    }
-    println!("Enter bill name to remove:");
+  pub fn remove_bills(bills: &mut Bills) {
+    print_bills(bills);
+    println!("Enter the bill name to remove");
+
     let name = match get_input() {
       Some(name) => name,
       None => return,
@@ -97,6 +95,10 @@ mod menu {
   }
 
   pub fn view_bills(bills: &Bills) {
+    self::print_bills(bills);
+  }
+
+  fn print_bills(bills: &Bills) {
     for bill in bills.get_all() {
       println!("{:?}", bill);
     }
@@ -171,7 +173,7 @@ fn main() {
     match MainMenu::from_str(input.as_str()) {
       Some(MainMenu::AddBill) => menu::add_bill(&mut bills),
       Some(MainMenu::ViewBill) => menu::view_bills(&bills),
-      Some(MainMenu::RemoveBill) => menu::remove_bill(&mut bills),
+      Some(MainMenu::RemoveBill) => menu::remove_bills(&mut bills),
       None => return,
     }
   }
