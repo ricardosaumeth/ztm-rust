@@ -10,6 +10,9 @@
 // * Create a function for each type of clothes (shoes, shirt, pants)
 //   that accepts the new type specific to that type of clothing
 
+use std::fmt;
+
+#[derive(Debug)]
 enum Color {
     Black,
     Blue,
@@ -23,5 +26,35 @@ enum Color {
     Yellow,
 }
 
-fn main() {}
+struct Shoes(Color);
+impl Shoes {
+    fn new(color: Color) -> Self {
+        Shoes(color)
+    }
+}
+
+struct Shirt(Color);
+impl Shirt {
+    fn new(color: Color) -> Self {
+        Shirt(color)
+    }
+}
+
+struct Pants(Color);
+impl Pants {
+    fn new(color: Color) -> Self {
+        Self(color)
+    }
+}
+
+fn main() {
+    let shoes = Shoes::new(Color::Black);
+    println!("{:?}", shoes.0);
+    
+    let shirt = Shirt::new(Color::Custom("aqua".to_owned()));
+    println!("{:?}", shirt.0);
+
+    let pant = Pants::new(Color::Purple);
+    println!("{:?}", pant.0);
+}
 

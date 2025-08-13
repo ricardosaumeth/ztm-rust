@@ -10,11 +10,23 @@
 // * See the stdlib docs for the "chunks" method on "slice" for more info
 
 fn data() -> &'static [u64] {
-    &[5, 5, 4, 4, 3, 3, 1]
+  &[5, 5, 4, 4, 3, 3, 1]
+}
+
+fn process_chunk(data: &[u64]) {
+  match data {
+    [a, b] => println!("{}+{}={}", a, b, a + b),
+    [single] => println!("Unpair value {:?}", single),
+    [] => println!("data complete"),
+    [..] => unreachable!("data must be 2"),
+  }
 }
 
 fn main() {
-    // `stream` is an iterator of &[u64]
-    let mut stream = data().chunks(2);
-}
+  // `stream` is an iterator of &[u64]
+  let mut stream = data().chunks(2);
 
+  for chunk in stream {
+    process_chunk(chunk);
+  }
+}
